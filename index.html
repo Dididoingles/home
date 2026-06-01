@@ -85,6 +85,7 @@
     }
 }
 
+
 /* Aplica fadeInUp para a maioria */
 .main-icon, .nav-icon, .sound-toggle, #avisos-window {
     opacity: 0;
@@ -558,6 +559,7 @@
                 padding: 1rem 0.75rem;
                 border-radius: 1.5rem;
                 height: auto;
+                max-height: 500px;
                 min-width: 110px;
                 transition: all 0.3s ease;
             }
@@ -571,6 +573,117 @@
                 align-items: center;
             }
         }
+
+        /* ============================================
+   TABLET RESPONSIVE (768px - 1024px)
+   Sobrescreve apenas o necessário
+   ============================================ */
+@media (min-width: 768px) and (max-width: 1024px) {
+    
+    /* Força sidebar visível (sobrescreve possível hidden) */
+    #desktop-sidebar {
+        display: flex !important;
+    }
+    
+    /* Sobrescreve regra anterior do page-title */
+    .page-title {
+        top: 60px !important;
+        font-size: 2.8rem !important;
+        padding: 6px 18px !important;
+    }
+    
+    /* Garante que os ícones principais fiquem em COLUNA (não grid) */
+    .main-icons-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        grid-template-columns: none !important;
+        gap: 1.2rem !important;
+        margin: 0 0 0 1rem !important;
+        max-width: none !important;
+    }
+    
+    /* Mantém tamanho dos ícones igual desktop */
+    .main-icon div {
+        width: 70px !important;
+        height: 70px !important;
+    }
+    
+    .main-icon i {
+        width: 30px !important;
+        height: 30px !important;
+    }
+    
+    /* Avisos window - posicionado como desktop */
+    #avisos-window {
+        position: relative !important;
+        top: auto !important;
+        right: auto !important;
+        left: auto !important;
+        transform: none !important;
+        width: 320px !important;
+        height: 320px !important;
+        margin: 0 0.5rem 0 0 !important;
+        border-radius: 1rem !important;
+    }
+    
+    /* Remove qualquer estilo mobile que possa aparecer */
+    .mobile-sidebar-overlay,
+    .mobile-sidebar-backdrop,
+    .menu-toggle-btn,
+    #close-avisos-mobile {
+        display: none !important;
+    }
+    
+    /* Botão de som no topo direito */
+    .sound-toggle {
+        top: 15px !important;
+        right: 15px !important;
+    }
+    
+    /* Ajuste do container flex para manter layout */
+    .order-1.md\:order-2 {
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        gap: 1rem;
+    }
+    
+    /* Sidebar colapsada - mantém funcionalidade */
+    .sidebar-collapsed {
+        min-width: 60px !important;
+        width: 60px !important;
+        max-height: 500px !important;
+    }
+    
+    /* Espaçamento para não cobrir o título */
+    main {
+        padding-top: 50px !important;
+    }
+}
+
+/* CORREÇÃO URGENTE TABLET */
+@media (min-width: 768px) and (max-width: 1024px) {
+    body {
+        overflow-y: auto !important;
+    }
+    
+    .page-title {
+        top: 10px !important;
+        font-size: 1rem !important;
+        padding: 2px 12px !important;
+        background: rgba(0,0,0,0.5) !important;
+    }
+    
+    main.flex-1 {
+        padding-top: 45px !important;
+        min-height: 100vh !important;
+    }
+    
+    .main-icons-grid {
+        margin-top: 0 !important;
+        justify-content: flex-start !important;
+        padding-top: 5px !important;
+    }
+}
     </style>
 </head>
 <body class="h-screen w-screen font-poppins overflow-hidden">
