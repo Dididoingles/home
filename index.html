@@ -340,15 +340,16 @@
                 align-items: center !important;
                 width: 100%;
                 max-width: 260px;
-                margin: 4.5rem auto 0 auto;
+                margin: 5.5rem auto 0 auto;
             }
             .main-icon {
                 width: auto !important;
             }
             
+            
             .page-title {
     top: 60px !important;
-    font-size: 1.2rem !important;
+    font-size: 1.6rem !important;
     padding: 8px 20px !important;
 }
             
@@ -367,11 +368,14 @@
                 width: calc(100% - 2rem) !important;
                 max-width: 340px !important;
                 height: 140px !important;
-                margin: 0.25rem auto 0.5rem auto !important;
+                margin-top: 0.5rem;
+                margin-bottom: 60px !important;  /* espaço extra na parte inferior */
                 border-radius: 16px !important;
                 border: 1px solid rgba(255,255,255,0.1);
                 box-shadow: 0 4px 20px rgba(0,0,0,0.4);
                 translate: none !important;
+                position: relative !important;
+                inset: auto !important;  /* remove qualquer top/right/bottom/left fixo */
             }
 
           
