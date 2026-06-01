@@ -58,6 +58,11 @@
             background: radial-gradient(circle at bottom right, #3a0000 0%, #000000 50%, #050505 100%);
         }
 
+        .question-mark {
+    color: var(--brand-red);
+    font-weight: 700;
+}
+
         /* Scrollbar styles */
         ::-webkit-scrollbar {
             width: 8px;
@@ -460,21 +465,33 @@
     }
     /* Botão de menu MOBILE com SETA (arrow-right) */
     .menu-toggle-btn {
-        position: fixed;
-        top: 12px;
-        left: 12px;
-        z-index: 100;
-        background: rgba(0,0,0,0.6);
-        backdrop-filter: blur(8px);
-        border: 1px solid rgba(194,0,0,0.5);
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-    }
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 100;
+    background: rgba(250, 248, 248, 0);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(194,0,0,0.5);
+    border-radius: 40px;
+    width: auto !important;
+    padding: 8px 16px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.menu-toggle-btn i {
+    display: none !important;
+}
+
+.menu-toggle-btn::before {
+    content: "Acesso rápido";
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
 }
 
         /* Desktop navbar */
@@ -508,7 +525,7 @@
 <body class="h-screen w-screen font-poppins overflow-hidden">
     
     <!-- Page Title -->
-    <div class="page-title">O que vamos fazer hoje?</div>
+    <div class="page-title">O que vamos fazer hoje<span class="question-mark">?</span></div>
     
     <!-- MAIN DESKTOP CONTENT -->
     <div id="main-content" class="h-screen w-full flex flex-col desktop-bg text-white">
