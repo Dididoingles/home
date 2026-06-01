@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Language Lab - Staffroom</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#c20000',
+                            dark: '#000000',
+                            gray: '#1f1f1f',
+                            light: '#f5f5f5'
+                        }
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                    },
+                    keyframes: {
+                        glow: {
+                            '0%': { boxShadow: '0 0 5px rgba(194,0,0,0.5), 0 0 10px rgba(194,0,0,0.3)' },
+                            '100%': { boxShadow: '0 0 20px rgba(194,0,0,0.8), 0 0 30px rgba(194,0,0,0.5)' }
+                        }
+                    },
+                    animation: {
+                        glow: 'glow 1.5s ease-in-out infinite alternate'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --brand-red: #c20000;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: radial-gradient(circle at bottom right, #3a0000 0%, #000000 50%, #050505 100%);
+        }
+
+        /* Scrollbar styles */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--brand-red) 0%, #8b0000 100%);
+            border-radius: 10px;
+        }
+
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--brand-red) rgba(255, 255, 255, 0.05);
+        }
+
+        @media (max-width: 768px) {
+            ::-webkit-scrollbar {
+                width: 6px;
+            }
+        }
+
+        /* Avisos window scrollbar - thin red */
+        #avisos-window .avisos-scroll-container {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            position: relative;
+            background: #000000;
+        }
+
+        #avisos-window .avisos-scroll-container::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        #avisos-window .avisos-scroll-container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        #avisos-window .avisos-scroll-container::-webkit-scrollbar-thumb {
+            background: var(--brand-red);
+            border-radius: 10px;
+        }
+
+        #avisos-window .avisos-scroll-container {
+            scrollbar-width: thin;
+            scrollbar-color: var(--brand-red) rgba(0, 0, 0, 0.2);
+        }
+
+        #avisos-window iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        .desktop-bg {
+            background: radial-gradient(circle at bottom right, #3a0000 0%, #000000 50%, #050505 100%);
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Desktop description box to the right of main icons */
+        .hover-desc-right {
+            position: absolute;
+            left: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-left: 12px;
+            background: rgba(0, 0, 0, 0.95);
+            color: white;
+            font-size: 11px;
+            padding: 8px 14px;
+            border-radius: 12px;
+            width: 200px;
+            max-width: 220px;
+            white-space: normal;
+            word-wrap: break-word;
+            text-align: left;
+            line-height: 1.4;
+            z-index: 100;
+            pointer-events: none;
+            border-left: 3px solid var(--brand-red);
+            backdrop-filter: blur(8px);
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        .hover-desc-right::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-right: 8px solid rgba(0,0,0,0.95);
+        }
+
+        .main-icon {
+            position: relative;
+        }
+
+        /* Sound toggle button - TOP RIGHT (mudado para cima) */
+        .sound-toggle {
+            transition: all 0.3s ease;
+            position: fixed;
+            top: 10px;
+            right: 16px;
+            z-index: 200;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(194,0,0,0.5);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        @media (min-width: 768px) {
+    .sound-toggle {
+        top: 40px;  /* ← posição só no desktop */
+        right: 20px;
+    }
+}
+        .sound-toggle:hover {
+            transform: scale(1.05);
+            background: rgba(194,0,0,0.3);
+        }
+        .sound-toggle.muted {
+            background: rgba(0,0,0,0.5);
+            border-color: #666;
+        }
+
+        /* Mobile dialog modal - CENTRALIZADO (mantido como estava) */
+        .mobile-dialog {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: #1f1f1f;
+            border-radius: 24px;
+            width: 85%;
+            max-width: 300px;
+            z-index: 10001;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.5);
+            border-top: 4px solid var(--brand-red);
+            margin: 0;
+            bottom: auto;
+            right: auto;
+        }
+        .mobile-dialog.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+        }
+        .dialog-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Collapsible Sidebar Styles - Desktop only - MOSTRA SÓ ÍCONES */
+        .sidebar-collapsed .nav-text {
+            display: none !important;
+        }
+        
+        .sidebar-collapsed .sidebar-header span {
+            display: none !important;
+        }
+        
+        .sidebar-collapsed {
+            min-width: 60px !important;
+            width: 60px !important;
+            padding-left: 0.5rem !important;
+            padding-right: 0.5rem !important;
+        }
+        
+        .sidebar-collapsed .sidebar-header {
+            justify-content: center !important;
+        }
+        
+        .sidebar-collapsed .nav-icon {
+            justify-content: center !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        
+        .sidebar-collapsed .sidebar-toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .nav-text {
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        /* Desktop Avisos window - 50% smaller and moved up */
+        @media (min-width: 768px) {
+            #avisos-window {
+                width: 340px !important;
+                height: 240px !important;
+                max-width: 340px;
+                max-height: 240px;
+                margin-top: -10px !important;
+            }
+        }
+
+        /* Page Title - com espaçamento da borda */
+        .page-title {
+            position: fixed;
+            top: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 0 10px rgba(194,0,0,0.5);
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            z-index: 150;
+            background: rgba(0,0,0,0.4);
+            padding: 5px 18px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        @media (min-width: 768px) {
+            .page-title {
+                font-size: 1rem;
+                top: 12px;
+                padding: 6px 20px;
+                top: 60px !important;  /* mais baixo - ajuste esse valor */
+               font-size: 2.2rem !important;  /* maior */
+               padding: 8px 20px !important;
+            }
+        }
+
+        /* Mobile Avisos - mais alto, perto dos main icons */
+        @media (max-width: 767px) {
+            .main-icons-grid {
+                display: grid !important;
+                grid-template-columns: repeat(2, minmax(0, auto)) !important;
+                gap: 0.75rem 1.25rem !important;
+                justify-content: center !important;
+                align-items: center !important;
+                width: 100%;
+                max-width: 260px;
+                margin: 4.5rem auto 0 auto;
+            }
+            .main-icon {
+                width: auto !important;
+            }
+            
+            .page-title {
+    top: 60px !important;
+    font-size: 1.2rem !important;
+    padding: 8px 20px !important;
+}
+            
+            /* Esconder botão flutuante do avisos no mobile */
+            #avisos-toggle-btn {
+                display: none !important;
+            }
+            
+            /* Avisos window - MAIS ALTO (margin-top reduzido) */
+            #avisos-window {
+                position: relative !important;
+                top: auto !important;
+                right: auto !important;
+                left: auto !important;
+                transform: none !important;
+                width: calc(100% - 2rem) !important;
+                max-width: 340px !important;
+                height: 140px !important;
+                margin: 0.25rem auto 0.5rem auto !important;
+                border-radius: 16px !important;
+                border: 1px solid rgba(255,255,255,0.1);
+                box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+                translate: none !important;
+            }
+
+          
+            
+            /* Mobile sidebar overlay */
+            .mobile-sidebar-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: 75%;
+                max-width: 260px;
+                background: #111111cc;
+                backdrop-filter: blur(16px);
+                z-index: 1000;
+                transform: translateX(-100%);
+                transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+                padding: 1rem;
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                border-right: 1px solid rgba(194,0,0,0.5);
+                box-shadow: 4px 0 25px rgba(0,0,0,0.5);
+            }
+            .mobile-sidebar-overlay.open {
+                transform: translateX(0);
+            }
+            .mobile-sidebar-backdrop {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.6);
+                z-index: 999;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+            .mobile-sidebar-backdrop.active {
+                opacity: 1;
+                visibility: visible;
+            }
+            .mobile-nav-item {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 10px 12px;
+                border-radius: 14px;
+                background: rgba(255,255,255,0.05);
+                transition: all 0.2s;
+                color: #eee;
+                font-size: 13px;
+                font-weight: 500;
+                text-decoration: none;
+            }
+            .mobile-nav-item i {
+                width: 20px;
+                height: 20px;
+            }
+            .mobile-nav-item:active {
+                background: rgba(194,0,0,0.6);
+                transform: scale(0.97);
+            }
+            .mobile-sidebar-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding-bottom: 12px;
+                margin-bottom: 8px;
+                border-bottom: 1px solid rgba(255,255,255,0.2);
+                font-weight: 600;
+                font-size: 14px;
+                color: var(--brand-red);
+            }
+            /* Botão de menu MOBILE com SETA (arrow-right) */
+            .menu-toggle-btn {
+                position: fixed;
+                top: 12px;
+                left: 12px;
+                z-index: 100;
+                background: rgba(0,0,0,0.6);
+                backdrop-filter: blur(8px);
+                border: 1px solid rgba(194,0,0,0.5);
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+            }
+        }
+
+        /* Desktop navbar */
+        @media (min-width: 768px) {
+            #desktop-sidebar {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                gap: 0.5rem;
+                background: rgba(31,31,31,0.8);
+                backdrop-filter: blur(12px);
+                padding: 1rem 0.75rem;
+                border-radius: 1.5rem;
+                height: auto;
+                min-width: 110px;
+                transition: all 0.3s ease;
+            }
+            .sidebar-header {
+                width: 100%;
+                margin-bottom: 0.5rem;
+                padding-bottom: 0.75rem;
+                border-bottom: 1px solid rgba(255,255,255,0.15);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body class="h-screen w-screen font-poppins overflow-hidden">
+    
+    <!-- Page Title -->
+    <div class="page-title">O que vamos fazer hoje?</div>
+    
+    <!-- MAIN DESKTOP CONTENT -->
+    <div id="main-content" class="h-screen w-full flex flex-col desktop-bg text-white">
+        
+        <!-- Top Bar - vazia (botão de som movido para topo) -->
+        <nav class="w-full h-8 sm:h-10 bg-black/40 backdrop-blur-md flex justify-end items-center px-4 z-50 shrink-0"></nav>
+
+        <!-- Main Desktop Area -->
+        <main class="flex-1 w-full flex flex-col md:flex-row relative z-10 pt-2 pb-2 md:pb-4 px-2 md:px-4 gap-3 md:gap-4 overflow-hidden">
+            
+            <!-- LEFT: Collapsible Navbar Desktop -->
+            <aside id="desktop-sidebar" class="hidden md:flex md:flex-col shrink-0">
+                <div class="sidebar-header">
+                    <span class="text-[11px] font-semibold text-gray-300 uppercase tracking-wider nav-text"> Acesso Rápido</span>
+                    <button id="sidebar-toggle-desktop" class="p-1 rounded-lg hover:bg-white/10 transition-all duration-300">
+                        <i data-lucide="chevron-left" class="w-4 h-4 text-gray-400 sidebar-toggle-icon transition-transform"></i>
+                    </button>
+                </div>
+                
+                <a href="https://sites.google.com/view/languagelabbr/board" target="_blank" class="nav-icon group flex items-center gap-2 p-2 rounded-xl hover:bg-white/10 transition-all duration-300 w-full" data-url="https://sites.google.com/view/languagelabbr/board" data-desc="Whiteboard - Quadro interativo para aulas">
+                    <i data-lucide="brush" class="w-5 h-5 text-gray-300 group-hover:text-white group-hover:scale-110 transition-transform shrink-0"></i>
+                    <span class="nav-text text-gray-300 group-hover:text-white text-xs">Whiteboard</span>
+                </a>
+                <a href="https://sites.google.com/view/languagelabbr/biblioteca" target="_blank" class="nav-icon group flex items-center gap-2 p-2 rounded-xl hover:bg-white/10 transition-all duration-300 w-full" data-url="https://sites.google.com/view/languagelabbr/biblioteca" data-desc="Biblioteca - Acervo de materiais e recursos">
+                    <i data-lucide="library" class="w-5 h-5 text-gray-300 group-hover:text-white group-hover:scale-110 transition-transform shrink-0"></i>
+                    <span class="nav-text text-gray-300 group-hover:text-white text-xs">Biblioteca</span>
+                </a>
+                <a href="https://sites.google.com/view/languagelabbr/labs/listening-lab" target="_blank" class="nav-icon group flex items-center gap-2 p-2 rounded-xl hover:bg-white/10 transition-all duration-300 w-full" data-url="https://sites.google.com/view/languagelabbr/labs/listening-lab" data-desc="Listening Lab - Exercícios de compreensão auditiva">
+                    <i data-lucide="headphones" class="w-5 h-5 text-gray-300 group-hover:text-white group-hover:scale-110 transition-transform shrink-0"></i>
+                    <span class="nav-text text-gray-300 group-hover:text-white text-xs">Listening Lab</span>
+                </a>
+                <a href="https://sites.google.com/view/languagelabbr/labs/reading-lab" target="_blank" class="nav-icon group flex items-center gap-2 p-2 rounded-xl hover:bg-white/10 transition-all duration-300 w-full" data-url="https://sites.google.com/view/languagelabbr/labs/reading-lab" data-desc="Reading Lab - Exercícios de leitura e compreensão">
+                    <i data-lucide="book-open" class="w-5 h-5 text-gray-300 group-hover:text-white group-hover:scale-110 transition-transform shrink-0"></i>
+                    <span class="nav-text text-gray-300 group-hover:text-white text-xs">Reading Lab</span>
+                </a>
+                <a href="https://sites.google.com/view/languagelabbr/labs/writing-lab" target="_blank" class="nav-icon group flex items-center gap-2 p-2 rounded-xl hover:bg-white/10 transition-all duration-300 w-full" data-url="https://sites.google.com/view/languagelabbr/labs/writing-lab" data-desc="Writing Lab - Exercícios de produção textual">
+                    <i data-lucide="pen-tool" class="w-5 h-5 text-gray-300 group-hover:text-white group-hover:scale-110 transition-transform shrink-0"></i>
+                    <span class="nav-text text-gray-300 group-hover:text-white text-xs">Writing Lab</span>
+                </a>
+                <a href="https://sites.google.com/view/languagelabbr/labs/speaking-lab" target="_blank" class="nav-icon group flex items-center gap-2 p-2 rounded-xl hover:bg-white/10 transition-all duration-300 w-full" data-url="https://sites.google.com/view/languagelabbr/labs/speaking-lab" data-desc="Speaking Lab - Exercícios de pronúncia e conversação">
+                    <i data-lucide="mic" class="w-5 h-5 text-gray-300 group-hover:text-white group-hover:scale-110 transition-transform shrink-0"></i>
+                    <span class="nav-text text-gray-300 group-hover:text-white text-xs">Speaking Lab</span>
+                </a>
+                <div class="w-6 h-px bg-white/20 my-1"></div>
+                <a href="https://sites.google.com/view/languagelabbr/sou-aluno" target="_blank" class="nav-icon group flex items-center gap-2 p-2 rounded-xl hover:bg-white/10 transition-all duration-300 w-full" data-url="https://sites.google.com/view/languagelabbr/sou-aluno" data-desc="Área do Aluno - Acesso restrito aos alunos">
+                    <i data-lucide="graduation-cap" class="w-5 h-5 text-gray-300 group-hover:text-white group-hover:scale-110 transition-transform shrink-0"></i>
+                    <span class="nav-text text-gray-300 group-hover:text-white text-xs">Área do Aluno</span>
+                </a>
+            </aside>
+
+            <!-- Desktop & Mobile Content -->
+            <div class="order-1 md:order-2 flex-1 w-full flex flex-col md:flex-row justify-between items-center z-10 h-full overflow-hidden">
+                
+                <!-- MAIN ICONS AREA -->
+                <div class="flex flex-row md:flex-col justify-center items-center gap-6 md:gap-6 md:ml-8 w-full md:w-auto h-auto md:h-full shrink-0 pt-2 md:pt-0 main-icons-grid">
+                    
+                    <div class="main-icon flex flex-col items-center group outline-none" data-url="https://sites.google.com/view/languagelabbr/labs" data-desc="Acesso à todos os laboratórios">
+                        <div class="w-14 h-14 md:w-16 md:h-16 bg-brand-gray/60 backdrop-blur border border-white/10 group-hover:border-brand-red group-hover:bg-brand-red/90 rounded-2xl flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-105 group-hover:shadow-brand-red/40 cursor-pointer">
+                            <i data-lucide="flask-conical" class="w-6 h-6 md:w-7 md:h-7 text-white drop-shadow-md"></i>
+                        </div>
+                        <span class="mt-1.5 md:mt-2 text-[10px] md:text-xs font-medium text-gray-200 group-hover:text-white text-center drop-shadow-md bg-black/40 px-1.5 py-0.5 rounded-md transition-colors w-full whitespace-nowrap">Laboratórios</span>
+                    </div>
+
+                    <div class="main-icon flex flex-col items-center group outline-none" data-url="https://sites.google.com/view/languagelabbr/labs/speaking-lab/ia-da-di-conversa%C3%A7%C3%A3o" data-desc="Pratique frases e textos com uma IA assistente que corrige para você">
+                        <div class="w-14 h-14 md:w-16 md:h-16 bg-brand-gray/60 backdrop-blur border border-white/10 group-hover:border-brand-red group-hover:bg-brand-red/90 rounded-2xl flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-105 group-hover:shadow-brand-red/40 cursor-pointer">
+                            <i data-lucide="message-circle" class="w-6 h-6 md:w-7 md:h-7 text-white drop-shadow-md"></i>
+                        </div>
+                        <span class="mt-1.5 md:mt-2 text-[10px] md:text-xs font-medium text-gray-200 group-hover:text-white text-center drop-shadow-md bg-black/40 px-1.5 py-0.5 rounded-md transition-colors w-full whitespace-nowrap">Praticar fala</span>
+                    </div>
+
+                    <div class="main-icon flex flex-col items-center group outline-none" data-url="https://sites.google.com/view/languagelabbr/reader" data-desc="Cole ou escreva uma frase ou texto e ouça a pronúncia correta com controle de velocidade">
+                        <div class="w-14 h-14 md:w-16 md:h-16 bg-brand-gray/60 backdrop-blur border border-white/10 group-hover:border-brand-red group-hover:bg-brand-red/90 rounded-2xl flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-105 group-hover:shadow-brand-red/40 cursor-pointer">
+                            <i data-lucide="headphones" class="w-6 h-6 md:w-7 md:h-7 text-white drop-shadow-md"></i>
+                        </div>
+                        <span class="mt-1.5 md:mt-2 text-[10px] md:text-xs font-medium text-gray-200 group-hover:text-white text-center drop-shadow-md bg-black/40 px-1.5 py-0.5 rounded-md transition-colors w-full whitespace-nowrap">Ouça seu texto</span>
+                    </div>
+
+                    <div class="main-icon flex flex-col items-center group outline-none" data-url="https://sites.google.com/view/languagelabbr/labs/writing-lab/ajudante" data-desc="Escreva em Inglês adicionando as palavras que você não sabe em português que o ajudante te mostra a palavra correta em contexto">
+                        <div class="w-14 h-14 md:w-16 md:h-16 bg-brand-gray/60 backdrop-blur border border-white/10 group-hover:border-brand-red group-hover:bg-brand-red/90 rounded-2xl flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-105 group-hover:shadow-brand-red/40 cursor-pointer">
+                            <i data-lucide="life-buoy" class="w-6 h-6 md:w-7 md:h-7 text-white drop-shadow-md"></i>
+                        </div>
+                        <span class="mt-1.5 md:mt-2 text-[10px] md:text-xs font-medium text-gray-200 group-hover:text-white text-center drop-shadow-md bg-black/40 px-1.5 py-0.5 rounded-md transition-colors w-full whitespace-nowrap">Ajudante</span>
+                    </div>
+                </div>
+
+                <!-- AVISOS WINDOW -->
+                <div class="fixed md:relative top-[7.5vh] md:top-auto right-0 h-[85vh] md:h-[240px] w-[85vw] sm:w-[320px] md:w-[340px] bg-brand-gray md:rounded-2xl rounded-l-2xl overflow-hidden shadow-2xl shadow-black/80 border-l md:border border-white/10 flex flex-col transform transition-all duration-500 ease-in-out z-40 md:translate-x-0 md:opacity-100 md:mr-4" id="avisos-window">
+                    
+                    <div class="h-9 sm:h-10 bg-[#121212] flex items-center justify-between px-3 sm:px-4 select-none border-b border-black shrink-0">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="bell" class="w-3.5 h-3.5 text-gray-400"></i>
+                            <span class="text-xs sm:text-sm font-semibold text-gray-200 truncate">Avisos</span>
+                        </div>
+                        <div class="flex gap-2.5 items-center">
+                            <div class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-gray-600 hover:bg-gray-500 cursor-pointer transition-colors"></div>
+                            <div class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-gray-600 hover:bg-gray-500 cursor-pointer transition-colors"></div>
+                            <div class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-brand-red hover:bg-red-500 cursor-pointer transition-colors flex items-center justify-center group md:hidden" id="close-avisos-mobile">
+                                 <i data-lucide="x" class="w-2 h-2 text-black opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="avisos-scroll-container flex-1 w-full bg-brand-light relative">
+                        <div class="absolute inset-0 flex flex-col items-center justify-center text-black/50 bg-white z-0" id="iframe-loader">
+                            <i data-lucide="loader" class="w-6 h-6 animate-spin mb-2"></i>
+                            <span class="text-[10px] font-medium">Carregando Avisos...</span>
+                        </div>
+                        <iframe src="https://dididoingles.github.io/avisos/" scrolling="yes" class="w-full h-full border-none relative z-10 bg-transparent"></iframe>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Sound Button - TOP RIGHT -->
+    <button id="sound-toggle-btn" class="sound-toggle">
+        <i data-lucide="volume-2" id="sound-icon" class="w-5 h-5 text-brand-red"></i>
+    </button>
+
+    <!-- MOBILE SIDEBAR (Overlay) - botão com SETA -->
+    <div class="mobile-sidebar-backdrop" id="mobile-sidebar-backdrop"></div>
+    <div class="mobile-sidebar-overlay" id="mobile-sidebar-overlay">
+        <div class="mobile-sidebar-header">
+            <span> Acesso Rápido</span>
+            <button id="close-mobile-sidebar" class="p-1"><i data-lucide="x" class="w-4 h-4 text-gray-300"></i></button>
+        </div>
+        <a href="https://sites.google.com/view/languagelabbr/board" target="_blank" class="mobile-nav-item" data-url="https://sites.google.com/view/languagelabbr/board" data-desc="Whiteboard - Quadro interativo para aulas">
+            <i data-lucide="brush"></i><span>Whiteboard</span>
+        </a>
+        <a href="https://sites.google.com/view/languagelabbr/biblioteca" target="_blank" class="mobile-nav-item" data-url="https://sites.google.com/view/languagelabbr/biblioteca" data-desc="Biblioteca - Acervo de materiais e recursos">
+            <i data-lucide="library"></i><span>Biblioteca</span>
+        </a>
+        <a href="https://sites.google.com/view/languagelabbr/labs/listening-lab" target="_blank" class="mobile-nav-item" data-url="https://sites.google.com/view/languagelabbr/labs/listening-lab" data-desc="Listening Lab - Exercícios de compreensão auditiva">
+            <i data-lucide="headphones"></i><span>Listening Lab</span>
+        </a>
+        <a href="https://sites.google.com/view/languagelabbr/labs/reading-lab" target="_blank" class="mobile-nav-item" data-url="https://sites.google.com/view/languagelabbr/labs/reading-lab" data-desc="Reading Lab - Exercícios de leitura e compreensão">
+            <i data-lucide="book-open"></i><span>Reading Lab</span>
+        </a>
+        <a href="https://sites.google.com/view/languagelabbr/labs/writing-lab" target="_blank" class="mobile-nav-item" data-url="https://sites.google.com/view/languagelabbr/labs/writing-lab" data-desc="Writing Lab - Exercícios de produção textual">
+            <i data-lucide="pen-tool"></i><span>Writing Lab</span>
+        </a>
+        <a href="https://sites.google.com/view/languagelabbr/labs/speaking-lab" target="_blank" class="mobile-nav-item" data-url="https://sites.google.com/view/languagelabbr/labs/speaking-lab" data-desc="Speaking Lab - Exercícios de pronúncia e conversação">
+            <i data-lucide="mic"></i><span>Speaking Lab</span>
+        </a>
+        <div class="h-px bg-white/20 my-1"></div>
+        <a href="https://sites.google.com/view/languagelabbr/sou-aluno" target="_blank" class="mobile-nav-item" data-url="https://sites.google.com/view/languagelabbr/sou-aluno" data-desc="Área do Aluno - Acesso restrito aos alunos">
+            <i data-lucide="graduation-cap"></i><span>Área do Aluno</span>
+        </a>
+    </div>
+    <!-- Botão com SETA (arrow-right) em vez de menu -->
+    <button id="mobile-menu-toggle" class="menu-toggle-btn md:hidden"><i data-lucide="arrow-right" class="w-5 h-5 text-white"></i></button>
+
+    <!-- Mobile Dialog Modal (CENTRALIZADO) -->
+    <div class="dialog-overlay" id="dialog-overlay"></div>
+    <div class="mobile-dialog" id="mobile-dialog">
+        <div class="p-6 text-center">
+            <p id="dialog-desc" class="text-gray-200 text-sm mb-6 leading-relaxed">Descrição aqui</p>
+            <button id="dialog-open-btn" class="w-full bg-brand-red text-white py-3 rounded-xl font-semibold hover:bg-red-600 transition-colors">Abrir</button>
+        </div>
+    </div>
+
+    <script>
+        // SFX System
+        const SFX_URLS = {
+            hover: 'https://res.cloudinary.com/dbwqwgbtx/video/upload/v1780092968/arnav_geddada-ui-sound-2-374229_gh19tt.mp3',
+            click: 'https://res.cloudinary.com/dbwqwgbtx/video/upload/v1780071236/zapsplat_multimedia_beep_soft_click_button_87548_a99mcv.mp3'
+        };
+        let sfxEnabled = true;
+        const audioCache = {};
+        let sfxReady = false;
+        
+        function preloadSFX() {
+            return new Promise((resolve) => {
+                let loadedCount = 0;
+                const totalSFX = Object.keys(SFX_URLS).length;
+                Object.entries(SFX_URLS).forEach(([key, url]) => {
+                    const audio = new Audio();
+                    audio.preload = 'auto';
+                    audio.volume = 0.4;
+                    audio.addEventListener('canplaythrough', () => { loadedCount++; if(loadedCount===totalSFX) { sfxReady=true; resolve(); } });
+                    audio.addEventListener('error', () => { loadedCount++; if(loadedCount===totalSFX) { sfxReady=true; resolve(); } });
+                    audio.src = url;
+                    audio.load();
+                    audioCache[key] = audio;
+                });
+            });
+        }
+        function playSFX(type, volume=0.3) {
+            if(!sfxEnabled || !sfxReady || !audioCache[type]) return;
+            try { const a = audioCache[type]; a.currentTime=0; a.volume=volume; a.play().catch(e=>{}); } catch(e){}
+        }
+        
+        // Sound Toggle - MUDA O ÍCONE quando desativado
+        const soundBtn = document.getElementById('sound-toggle-btn');
+        const soundIconSpan = document.getElementById('sound-icon');
+        function updateSoundUI() {
+    if(sfxEnabled) {
+        soundBtn.classList.remove('muted');
+    } else {
+        soundBtn.classList.add('muted');
+    }
+}
+        if(soundBtn) {
+            soundBtn.addEventListener('click', () => {
+                sfxEnabled = !sfxEnabled;
+                updateSoundUI();
+                playSFX('click', 0.3);
+            });
+        }
+        
+        // Desktop hover descriptions
+        const isMobile = () => window.innerWidth < 768;
+        function attachRightDescriptions() {
+            if(isMobile()) return;
+            document.querySelectorAll('.main-icon').forEach(icon => {
+                if(icon.hasAttribute('data-desc-attached')) return;
+                icon.setAttribute('data-desc-attached', 'true');
+                const desc = icon.getAttribute('data-desc');
+                let descBox = null;
+                icon.addEventListener('mouseenter', () => {
+                    if(descBox) return;
+                    descBox = document.createElement('div');
+                    descBox.className = 'hover-desc-right';
+                    descBox.textContent = desc;
+                    icon.appendChild(descBox);
+                    playSFX('hover', 0.2);
+                });
+                icon.addEventListener('mouseleave', () => { if(descBox) { descBox.remove(); descBox=null; } });
+            });
+        }
+        
+        // Desktop sidebar collapse - MOSTRA SÓ ÍCONES
+        const desktopSidebar = document.getElementById('desktop-sidebar');
+        const desktopToggle = document.getElementById('sidebar-toggle-desktop');
+        let isDesktopCollapsed = false;
+        if(desktopToggle) {
+            desktopToggle.addEventListener('click', () => {
+                isDesktopCollapsed = !isDesktopCollapsed;
+                if(isDesktopCollapsed) {
+                    desktopSidebar.classList.add('sidebar-collapsed');
+                } else {
+                    desktopSidebar.classList.remove('sidebar-collapsed');
+                }
+                lucide.createIcons();
+                playSFX('click', 0.3);
+            });
+        }
+        
+        // Mobile modal system (centralizado)
+        let pendingUrl = null;
+        const dialogOverlay = document.getElementById('dialog-overlay');
+        const mobileDialog = document.getElementById('mobile-dialog');
+        const dialogDesc = document.getElementById('dialog-desc');
+        const dialogOpenBtn = document.getElementById('dialog-open-btn');
+        
+        function closeDialog() {
+            dialogOverlay.classList.remove('active');
+            mobileDialog.classList.remove('active');
+            pendingUrl = null;
+        }
+        dialogOverlay.addEventListener('click', closeDialog);
+        dialogOpenBtn.addEventListener('click', () => {
+            if(pendingUrl) { window.open(pendingUrl, '_blank'); closeDialog(); }
+        });
+        
+        // Main icons click handler
+        document.querySelectorAll('.main-icon').forEach(icon => {
+            const url = icon.getAttribute('data-url');
+            const desc = icon.getAttribute('data-desc');
+            icon.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if(isMobile()) {
+                    pendingUrl = url;
+                    dialogDesc.textContent = desc;
+                    dialogOverlay.classList.add('active');
+                    mobileDialog.classList.add('active');
+                    playSFX('click', 0.35);
+                } else {
+                    playSFX('click', 0.35);
+                    window.open(url, '_blank');
+                }
+            });
+        });
+        
+        // Mobile sidebar logic
+        const mobileSidebar = document.getElementById('mobile-sidebar-overlay');
+        const backdrop = document.getElementById('mobile-sidebar-backdrop');
+        const menuToggle = document.getElementById('mobile-menu-toggle');
+        const closeSidebarBtn = document.getElementById('close-mobile-sidebar');
+        
+        function closeMobileSidebar() { mobileSidebar.classList.remove('open'); backdrop.classList.remove('active'); }
+        function openMobileSidebar() { mobileSidebar.classList.add('open'); backdrop.classList.add('active'); playSFX('click'); }
+        if(menuToggle) menuToggle.addEventListener('click', openMobileSidebar);
+        if(closeSidebarBtn) closeSidebarBtn.addEventListener('click', closeMobileSidebar);
+        backdrop.addEventListener('click', closeMobileSidebar);
+        
+        // Mobile nav items
+        document.querySelectorAll('.mobile-nav-item').forEach(item => {
+            const url = item.getAttribute('data-url');
+            const desc = item.getAttribute('data-desc');
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                if(isMobile()) {
+                    closeMobileSidebar();
+                    setTimeout(() => {
+                        pendingUrl = url;
+                        dialogDesc.textContent = desc || 'Abrir link';
+                        dialogOverlay.classList.add('active');
+                        mobileDialog.classList.add('active');
+                        playSFX('click', 0.35);
+                    }, 150);
+                } else {
+                    window.open(url, '_blank');
+                }
+            });
+        });
+        
+        // Desktop nav icons hover sound
+        if(!isMobile()) {
+            document.querySelectorAll('.nav-icon').forEach(icon => {
+                icon.addEventListener('mouseenter', () => playSFX('hover', 0.2));
+            });
+        }
+        
+        // Initialization
+        async function init() {
+            await preloadSFX();
+            lucide.createIcons();
+            attachRightDescriptions();
+            updateSoundUI();
+            const iframeLoader = document.getElementById('iframe-loader');
+            if(iframeLoader) setTimeout(() => { iframeLoader.style.display = 'none'; }, 500);
+            if(window.innerWidth < 768 && desktopSidebar) desktopSidebar.style.display = 'none';
+            else if(desktopSidebar) desktopSidebar.style.display = 'flex';
+        }
+        init();
+        
+        window.addEventListener('resize', () => {
+            lucide.createIcons();
+            attachRightDescriptions();
+            if(window.innerWidth >= 768) {
+                if(desktopSidebar) desktopSidebar.style.display = 'flex';
+            } else {
+                if(desktopSidebar) desktopSidebar.style.display = 'none';
+            }
+        });
+        
+        dialogOverlay.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+    </script>
+</body>
+</html>
