@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Language Lab - Staffroom</title>
+    <title>Language Lab - homepage</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -330,145 +330,151 @@
             }
         }
 
-        /* Mobile Avisos - mais alto, perto dos main icons */
         @media (max-width: 767px) {
-            .main-icons-grid {
-                display: grid !important;
-                grid-template-columns: repeat(2, minmax(0, auto)) !important;
-                gap: 0.75rem 1.25rem !important;
-                justify-content: center !important;
-                align-items: center !important;
-                width: 100%;
-                max-width: 260px;
-                margin: 5.5rem auto 0 auto;
-            }
-            .main-icon {
-                width: auto !important;
-            }
-            
-            
-            .page-title {
-    top: 60px !important;
-    font-size: 1.6rem !important;
-    padding: 8px 20px !important;
+    .main-icons-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, auto)) !important;
+        gap: 0.75rem 1.25rem !important;
+        justify-content: center !important;
+        align-items: center !important;
+        width: 100%;
+        max-width: 260px;
+        margin: 5.5rem auto 0 auto;
+    }
+    .main-icon {
+        width: auto !important;
+    }
+    
+    /* AUMENTAR ÍCONES NO MOBILE */
+    .main-icon div {
+        width: 70px !important;
+        height: 70px !important;
+    }
+    
+    .main-icon i {
+        width: 28px !important;
+        height: 28px !important;
+    }
+    
+    .page-title {
+        top: 60px !important;
+        font-size: 1.6rem !important;
+        padding: 8px 20px !important;
+    }
+    
+    /* Esconder botão flutuante do avisos no mobile */
+    #avisos-toggle-btn {
+        display: none !important;
+    }
+    
+    /* Avisos window */
+    #avisos-window {
+        position: relative !important;
+        top: auto !important;
+        right: auto !important;
+        left: auto !important;
+        transform: none !important;
+        width: calc(100% - 2rem) !important;
+        max-width: 340px !important;
+        height: 140px !important;
+        margin-top: 0.5rem;
+        margin-bottom: 200px !important;
+        border-radius: 16px !important;
+        border: 1px solid rgba(255,255,255,0.1);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        translate: none !important;
+        inset: auto !important;
+    }
+    
+    /* Mobile sidebar overlay */
+    .mobile-sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 75%;
+        max-width: 260px;
+        background: #111111cc;
+        backdrop-filter: blur(16px);
+        z-index: 1000;
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        border-right: 1px solid rgba(194,0,0,0.5);
+        box-shadow: 4px 0 25px rgba(0,0,0,0.5);
+    }
+    .mobile-sidebar-overlay.open {
+        transform: translateX(0);
+    }
+    .mobile-sidebar-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.6);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    .mobile-sidebar-backdrop.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    .mobile-nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px;
+        border-radius: 14px;
+        background: rgba(255,255,255,0.05);
+        transition: all 0.2s;
+        color: #eee;
+        font-size: 13px;
+        font-weight: 500;
+        text-decoration: none;
+    }
+    .mobile-nav-item i {
+        width: 20px;
+        height: 20px;
+    }
+    .mobile-nav-item:active {
+        background: rgba(194,0,0,0.6);
+        transform: scale(0.97);
+    }
+    .mobile-sidebar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 12px;
+        margin-bottom: 8px;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--brand-red);
+    }
+    /* Botão de menu MOBILE com SETA (arrow-right) */
+    .menu-toggle-btn {
+        position: fixed;
+        top: 12px;
+        left: 12px;
+        z-index: 100;
+        background: rgba(0,0,0,0.6);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(194,0,0,0.5);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
 }
-            
-            /* Esconder botão flutuante do avisos no mobile */
-            #avisos-toggle-btn {
-                display: none !important;
-            }
-            
-            /* Avisos window - MAIS ALTO (margin-top reduzido) */
-            #avisos-window {
-                position: relative !important;
-                top: auto !important;
-                right: auto !important;
-                left: auto !important;
-                transform: none !important;
-                width: calc(100% - 2rem) !important;
-                max-width: 340px !important;
-                height: 140px !important;
-                margin-top: 0.5rem;
-                margin-bottom: 200px !important;  /* espaço extra na parte inferior */
-                border-radius: 16px !important;
-                border: 1px solid rgba(255,255,255,0.1);
-                box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-                translate: none !important;
-                position: relative !important;
-                inset: auto !important;  /* remove qualquer top/right/bottom/left fixo */
-            }
-
-          
-            
-            /* Mobile sidebar overlay */
-            .mobile-sidebar-overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                bottom: 0;
-                width: 75%;
-                max-width: 260px;
-                background: #111111cc;
-                backdrop-filter: blur(16px);
-                z-index: 1000;
-                transform: translateX(-100%);
-                transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-                padding: 1rem;
-                display: flex;
-                flex-direction: column;
-                gap: 0.5rem;
-                border-right: 1px solid rgba(194,0,0,0.5);
-                box-shadow: 4px 0 25px rgba(0,0,0,0.5);
-            }
-            .mobile-sidebar-overlay.open {
-                transform: translateX(0);
-            }
-            .mobile-sidebar-backdrop {
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(0,0,0,0.6);
-                z-index: 999;
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s ease;
-            }
-            .mobile-sidebar-backdrop.active {
-                opacity: 1;
-                visibility: visible;
-            }
-            .mobile-nav-item {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                padding: 10px 12px;
-                border-radius: 14px;
-                background: rgba(255,255,255,0.05);
-                transition: all 0.2s;
-                color: #eee;
-                font-size: 13px;
-                font-weight: 500;
-                text-decoration: none;
-            }
-            .mobile-nav-item i {
-                width: 20px;
-                height: 20px;
-            }
-            .mobile-nav-item:active {
-                background: rgba(194,0,0,0.6);
-                transform: scale(0.97);
-            }
-            .mobile-sidebar-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding-bottom: 12px;
-                margin-bottom: 8px;
-                border-bottom: 1px solid rgba(255,255,255,0.2);
-                font-weight: 600;
-                font-size: 14px;
-                color: var(--brand-red);
-            }
-            /* Botão de menu MOBILE com SETA (arrow-right) */
-            .menu-toggle-btn {
-                position: fixed;
-                top: 12px;
-                left: 12px;
-                z-index: 100;
-                background: rgba(0,0,0,0.6);
-                backdrop-filter: blur(8px);
-                border: 1px solid rgba(194,0,0,0.5);
-                border-radius: 50%;
-                width: 40px;
-                height: 40px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-            }
-        }
 
         /* Desktop navbar */
         @media (min-width: 768px) {
@@ -581,7 +587,7 @@
 
                     <div class="main-icon flex flex-col items-center group outline-none" data-url="https://sites.google.com/view/languagelabbr/labs/writing-lab/ajudante" data-desc="Escreva em Inglês adicionando as palavras que você não sabe em português que o ajudante te mostra a palavra correta em contexto">
                         <div class="w-14 h-14 md:w-16 md:h-16 bg-brand-gray/60 backdrop-blur border border-white/10 group-hover:border-brand-red group-hover:bg-brand-red/90 rounded-2xl flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-105 group-hover:shadow-brand-red/40 cursor-pointer">
-                            <i data-lucide="life-buoy" class="w-6 h-6 md:w-7 md:h-7 text-white drop-shadow-md"></i>
+                            <i data-lucide="heart-handshake" class="w-6 h-6 md:w-7 md:h-7 text-white drop-shadow-md"></i>
                         </div>
                         <span class="mt-1.5 md:mt-2 text-[10px] md:text-xs font-medium text-gray-200 group-hover:text-white text-center drop-shadow-md bg-black/40 px-1.5 py-0.5 rounded-md transition-colors w-full whitespace-nowrap">Ajudante</span>
                     </div>
