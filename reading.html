@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Lab</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #faf7f2;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 10px;
+        }
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background: white;
+            border-radius: 30px;
+            padding: 30px 20px;
+            box-shadow: 0 10px 30px rgba(194,0,0,0.1);
+        }
+        h1 { 
+            text-align: center; 
+            font-size: clamp(2rem, 8vw, 3.5rem); 
+            color: #333; 
+            margin-bottom: 10px; 
+        }
+        h1 span { color: #c20000; }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 1rem;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .card {
+            background: #faf7f2;
+            border-radius: 20px;
+            padding: 25px 20px;
+            text-decoration: none;
+            color: #333;
+            border: 1px solid rgba(194,0,0,0.1);
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover { transform: translateY(-5px); border-color: #c20000; }
+        .icon {
+            width: 60px; height: 60px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; margin-bottom: 15px;
+        }
+        .card:nth-child(1) .icon { background: #e6f4e6; color: #2e7d32; }
+        .card:nth-child(2) .icon { background: #fff3e0; color: #bf360c; }
+        .card:nth-child(3) .icon { background: #ffebee; color: #c20000; }
+        .badge {
+            background: #c20000; color: white; padding: 4px 12px;
+            border-radius: 30px; font-size: 0.7rem; font-weight: 600;
+            letter-spacing: 0.5px; margin-bottom: 10px; display: inline-block;
+            width: fit-content;
+        }
+        h2 { font-size: 1.3rem; margin-bottom: 10px; }
+        .desc { color: #666; font-size: 0.9rem; margin-bottom: 15px; line-height: 1.4; }
+        .features { list-style: none; margin-bottom: 20px; }
+        .features li { display: flex; gap: 8px; font-size: 0.85rem; color: #666; margin-bottom: 8px; }
+        .footer {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: auto; border-top: 1px solid rgba(194,0,0,0.1);
+            padding-top: 15px; color: #c20000; font-weight: 500;
+        }
+        .info {
+            background: #f0e9e0; border-radius: 20px; padding: 25px;
+            display: flex; flex-wrap: wrap; gap: 20px; margin: 20px 0;
+        }
+        .info-text { flex: 2; min-width: 250px; }
+        .info-text h3 { color: #c20000; margin-bottom: 10px; }
+        .stats {
+            flex: 1; min-width: 200px; background: white; border-radius: 15px;
+            padding: 20px; text-align: center;
+        }
+        .stat-big { font-size: 2.5rem; font-weight: 700; color: #c20000; line-height: 1; }
+        .back {
+            text-align: center; margin-top: 20px;
+        }
+        .back a {
+            display: inline-flex; align-items: center; gap: 8px;
+            color: #666; text-decoration: none; padding: 10px 25px;
+            background: #f0e9e0; border-radius: 40px; font-size: 0.9rem;
+        }
+        @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📖 <span>Reading Lab</span></h1>
+        <div class="subtitle">Textos organizados por níveis de proficiência com tradução e exercícios integrados</div>
+
+        <div class="grid">
+            <!-- A1 -->
+            <a href="https://sites.google.com/view/languagelabbr/labs/reading-lab/n%C3%ADvel-a1" class="card" target="_blank">
+                <div class="icon">🌱</div>
+                <div class="badge">A1 • INICIANTE</div>
+                <h2>Nível A1</h2>
+                <div class="desc">Textos simples para iniciantes</div>
+                <ul class="features">
+                    <li><span>📄</span> 4 textos básicos</li>
+                    <li><span>🔄</span> Tradução por clique</li>
+                </ul>
+                <div class="footer"><span>Acessar</span> <span>→</span></div>
+            </a>
+
+            <!-- A2-B1 -->
+            <a href="https://sites.google.com/view/languagelabbr/labs/reading-lab/a2-b1" class="card" target="_blank">
+                <div class="icon">🌿</div>
+                <div class="badge">A2-B1 • INTERMEDIÁRIO</div>
+                <h2>Nível A2-B1</h2>
+                <div class="desc">Textos mais longos e variados</div>
+                <ul class="features">
+                    <li><span>📄</span> 4 textos temáticos</li>
+                    <li><span>🔄</span> Tradução contextual</li>
+                </ul>
+                <div class="footer"><span>Acessar</span> <span>→</span></div>
+            </a>
+
+            <!-- B2-C1 -->
+            <a href="https://sites.google.com/view/languagelabbr/labs/reading-lab/b2-c1" class="card" target="_blank">
+                <div class="icon">🌳</div>
+                <div class="badge">B2-C1 • AVANÇADO</div>
+                <h2>Nível B2-C1</h2>
+                <div class="desc">Textos autênticos e complexos</div>
+                <ul class="features">
+                    <li><span>📄</span> 3 textos</li>
+                    <li><span>🔄</span> Dicionário integrado</li>
+                </ul>
+                <div class="footer"><span>Acessar</span> <span>→</span></div>
+            </a>
+        </div>
+
+        <div class="info">
+            <div class="info-text">
+                <h3>Sobre o Reading Lab</h3>
+                <p>Textos com tradução integrada e exercícios. Clique em "Aprenda mais" após a leitura.</p>
+            </div>
+            <div class="stats">
+                <div class="stat-big">11</div>
+                <div>TEXTOS</div>
+                <div style="margin-top: 10px; font-size:0.9rem;">A1:4 | A2-B1:4 | B2-C1:3</div>
+            </div>
+        </div>
+
+        <div class="back">
+            <a href="https://sites.google.com/view/languagelabbr/labs" target="_blank"><span>←</span> Voltar</a>
+        </div>
+    </div>
+</body>
+</html>
