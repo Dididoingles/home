@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Language Lab - Portal Principal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #0f0f0f;
+      --card-bg: #1a1a1a;
+      --accent: #C20000;
+      --text-main: #ffffff;
+      --text-dim: #999;
+      --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    /* Scrollbar para WebKit (Chrome, Safari, Edge, Opera) */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+/* Track (trilha da scrollbar) */
+::-webkit-scrollbar-track {
+    background: #0c0c0c;
+    border-radius: 10px;
+    border: 1px solid #1a1a1a;
+}
+
+/* Thumb (alça da scrollbar) */
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #c20000, #8b0000);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+/* Thumb ao passar o mouse */
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #e00000, #c20000);
+    cursor: pointer;
+}
+
+/* Thumb quando está sendo arrastado (active) */
+::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(135deg, #ff1a1a, #e00000);
+}
+
+/* Corner (canto quando ambas scrollbars aparecem) */
+::-webkit-scrollbar-corner {
+    background: #0c0c0c;
+    border: 1px solid #1a1a1a;
+}
+
+/* Scrollbar para Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #c20000 #0c0c0c;
+}
+
+/* Estilização adicional para o container principal */
+.container {
+    scrollbar-width: thin;
+    scrollbar-color: #c20000 #0c0c0c;
+}
+
+/* Para áreas específicas com overflow (como modais ou cards) */
+.teste-card,
+.student-info,
+.results-area,
+.strategy-box,
+.footer {
+    scrollbar-width: thin;
+    scrollbar-color: #c20000 #0c0c0c;
+}
+
+/* Ajuste fino para WebKit em elementos específicos */
+.teste-card::-webkit-scrollbar,
+.student-info::-webkit-scrollbar,
+.results-area::-webkit-scrollbar,
+.strategy-box::-webkit-scrollbar,
+.footer::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Efeito de glow na scrollbar quando em foco */
+::-webkit-scrollbar-thumb {
+    box-shadow: 0 0 5px rgba(194, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    box-shadow: 0 0 8px rgba(194, 0, 0, 0.5);
+}
+
+/* Estilo para quando a página está sendo rolada (opcional) */
+body:active::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #ff3333, #c20000);
+}
+
+.spacer {
+  height: 100px;  /* Altura do espaçamento */
+  width: 100%;
+}
+
+/* Versão responsiva */
+@media (max-width: 600px) {
+  .spacer {
+    height: 45px;
+  }
+}
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+      overflow-x: hidden;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 50px;
+      animation: fadeInDown 1s ease-out;
+    }
+
+    .header p {
+      color: var(--accent);
+      font-size: 0.9rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .header h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: -1.5px;
+    }
+
+    .header h1 span {
+      background: linear-gradient(to right, #ffffff, #888);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hub-grid {
+      display: grid;
+      /* Ajustado para 2 colunas fixas de tamanhos iguais */
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      width: 100%;
+      max-width: 1200px; /* Reduzi um pouco o max-width para os cards não ficarem largos demais em 2 colunas */
+      height: 100%;
+      max-height: 300px;
+       position: relative;     /* ← ADICIONE ESTA */
+       top: -50px; 
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .hub-card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 30px 20px;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text-main);
+      border: 1px solid #222;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .hub-card:hover {
+      transform: translateY(-12px);
+      background: #222;
+      border-color: var(--accent);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 20px rgba(194, 0, 0, 0.15);
+    }
+
+    .hub-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      border-radius: 24px;
+      background: linear-gradient(135deg, var(--accent) 0%, transparent 100%);
+      opacity: 0;
+      transition: var(--transition);
+      z-index: 0;
+    }
+
+    .hub-card:hover::before {
+      opacity: 0.05;
+    }
+
+    .icon-box {
+      font-size: 35px;
+      margin-bottom: 15px;
+      background: #252525;
+      width: 70px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 20px;
+      transition: var(--transition);
+      z-index: 1;
+    }
+
+    .hub-card:hover .icon-box {
+      background: var(--accent);
+      transform: rotate(-5deg) scale(1.1);
+    }
+
+    .hub-card h2 {
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+      font-weight: 700;
+      z-index: 1;
+    }
+
+    .hub-card p {
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      line-height: 1.6;
+      z-index: 1;
+    }
+
+    .enter-label {
+      margin-top: auto;
+      padding-top: 25px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.6;
+      transition: var(--transition);
+      z-index: 1;
+    }
+
+    .hub-card:hover .enter-label {
+      opacity: 1;
+      gap: 12px;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsividade: Volta para 1 coluna em telas pequenas */
+    @media (max-width: 700px) {
+      .header h1 { font-size: 2.2rem; }
+      .hub-grid { grid-template-columns: 1fr; }
+    }
+    /* REGRA PARA TABLETS - 2 colunas */
+@media (min-width: 701px) and (max-width: 900px) {
+  .hub-grid { 
+    grid-template-columns: repeat(2, 1fr);  /* 2 colunas */
+  }
+}
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <p></p>
+    <h1>Language <span>Lab</span></h1>
+  </div>
+
+<body data-theme="dark">
+  <div class="spacer"></div>
+
+  <div class="hub-grid">
+    
+    <!-- Listening Lab -->
+    <a href="https://sites.google.com/view/languagelabbr/labs/listening-lab" class="hub-card">
+      <div class="icon-box">🎧</div>
+      <h2>Listening Lab</h2>
+      <p>Treine seus ouvidos com áudios reais, desafios de compreensão e imersão sonora guiada.</p>
+      <div class="enter-label">Explorar Lab <span>→</span></div>
+    </a>
+
+    <!-- Reading Lab -->
+    <a href="https://sites.google.com/view/languagelabbr/labs/reading-lab" class="hub-card">
+      <div class="icon-box">📖</div>
+      <h2>Reading Lab</h2>
+      <p>Desenvolva sua leitura com textos inteligentes, análise de padrões e expansão de vocabulário.</p>
+      <div class="enter-label">Explorar Lab <span>→</span></div>
+    </a>
+
+    <!-- Writing Lab -->
+    <a href="https://sites.google.com/view/languagelabbr/labs/writing-lab" class="hub-card">
+      <div class="icon-box">✍️</div>
+      <h2>Writing Lab</h2>
+      <p>Refine sua escrita com o Hybrid Decoder e prática guiada para um flow natural.</p>
+      <div class="enter-label">Explorar Lab <span>→</span></div>
+    </a>
+
+    <!-- Speaking Lab -->
+    <a href="https://sites.google.com/view/languagelabbr/labs/speaking-lab" class="hub-card">
+      <div class="icon-box">🎙️</div>
+      <h2>Speaking Lab</h2>
+      <p>Pratique sua fala com IA e valide sua pronúncia em um ambiente seguro e interativo.</p>
+      <div class="enter-label">Explorar Lab <span>→</span></div>
+    </a>
+
+  </div>
+
+  <footer style="margin-top: 80px; color: #444; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px;">
+    &copy; 2024 Language Lab BR - O Futuro do Aprendizado
+  </footer>
+
+</body>
+</html>
