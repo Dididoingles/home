@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listening Lab - Menu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #121212;
+      --card-bg: #1e1e1e;
+      --accent: #C20000;
+      --text-main: #ffffff;
+      --text-dim: #aaa;
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 50px;
+      animation: fadeInDown 0.8s ease-out;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+    }
+
+    .header h1 span {
+      color: var(--accent);
+    }
+
+    .header p {
+      color: var(--text-dim);
+      font-size: 1rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .menu-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* Forçamos 2 colunas */
+      gap: 15px;
+      width: 100%;
+      max-width: 1200px;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text-main);
+      border-top: 4px solid transparent;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Estilo para centralizar o terceiro card */
+    .card.full-width {
+      grid-column: span 3;
+      max-width: 435px;
+      justify-self: center;
+      width: 100%;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      border-top-color: var(--accent);
+      box-shadow: 0 20px 40px rgba(194, 0, 0, 0.2);
+      background: #252525;
+    }
+
+    .card-icon {
+      font-size: 30px;
+      margin-bottom: 20px;
+      display: block;
+      transition: var(--transition);
+    }
+
+    .card:hover .card-icon {
+      transform: scale(1.2);
+    }
+
+    .card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .card p {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      flex-grow: 1;
+    }
+
+    .card-footer {
+      margin-top: 25px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .card:hover .card-footer {
+      opacity: 1;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 700px) {
+      .header h1 { font-size: 2rem; }
+      .menu-container { grid-template-columns: 1fr; }
+      .card.full-width { grid-column: span 1; max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    
+    <h1>Listening <span>Lab</span></h1>
+  </div>
+
+  <div class="menu-container">
+    
+    <!-- Card 1: Music Lab -->
+    <a href="https://sites.google.com/view/languagelabbr/labs/listening-lab/m%C3%BAsica" class="card">
+      <span class="card-icon">🎵</span>
+      <h2>Music Lab</h2>
+      <p>Treine seu ouvido com as suas músicas favoritas. Aprenda expressões reais com o suporte da nossa IA.</p>
+      <div class="card-footer">Sintonizar →</div>
+    </a>
+
+    <!-- Card 2: Short Cinema -->
+    <a href="https://sites.google.com/view/languagelabbr/labs/listening-lab/short-cinema" class="card">
+      <span class="card-icon">🎬</span>
+      <h2>Short Cinema</h2>
+      <p>Cenas curtas de filmes e séries para você dominar diferentes sotaques e o inglês da vida real.</p>
+      <div class="card-footer">Assistir →</div>
+    </a>
+    
+     <!-- Card 3: Listening Test -->
+    <a href="https://sites.google.com/view/languagelabbr/labs/listening-lab/listening-test" class="card">
+      <span class="card-icon">📝</span>
+      <h2>Listening Test</h2>
+      <p>Desafio final: assista às cenas e complete as lacunas. Teste sua precisão auditiva agora mesmo.</p>
+      <div class="card-footer">Assistir →</div>
+    </a>
+
+    
+  </div>
+
+  <footer style="margin-top: 60px; color: #444; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px;">
+    &copy; 2024 Language Lab BR - Imersão Auditiva Inteligente
+  </footer>
+
+</body>
+</html>
